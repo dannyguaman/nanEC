@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "30677479713",
+    "project_id": "nanec-1483b",
+    "storage_bucket": "nanec-1483b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30677479713:android:bc37146e28c096ae180e60",
+        "android_client_info": {
+          "package_name": "ec.edu.epn.nanec"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgKsq4Lbjnzi8-FSZ_umPiQohtv-GXCIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

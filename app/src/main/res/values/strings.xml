@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">nanEC</string>
+    <string name="title_activity_detalle">DetalleActivity</string>
+</resources>
