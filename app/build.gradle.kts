@@ -64,7 +64,17 @@ dependencies {
     implementation (libs.firebase.messaging)
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
     implementation (libs.androidx.lifecycle.livedata.ktx)
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    implementation(platform(libs.firebase.bom))
+    implementation (libs.retrofit2.retrofit)
+    implementation (libs.converter.gson)
+    //implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    //implementation "androidx.compose.material:material:1.5.1"
+    implementation (libs.androidx.material)
+    //implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha05"
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
