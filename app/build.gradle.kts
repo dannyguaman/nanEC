@@ -73,6 +73,8 @@ dependencies {
     implementation (libs.androidx.material)
     //implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha05"
     implementation (libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
 
 
 

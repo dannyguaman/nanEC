@@ -2,52 +2,35 @@ package ec.edu.epn.nanec
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.tasks.OnCompleteListener
+import androidx.activity.viewModels
+import androidx.navigation.compose.rememberNavController
 import com.google.firebase.messaging.FirebaseMessaging
-import ec.edu.epn.nanec.api.RetrofitInstance
-import ec.edu.epn.nanec.uin.ListaEventosScreen
-import kotlinx.coroutines.launch
+import ec.edu.epn.nanec.navigation.AppNavigation
+import ec.edu.epn.nanec.viewmodel.EventosViewModel
+import ec.edu.epn.nanec.viewmodel.UsuarioViewModel
+
 
 class MainActivity : ComponentActivity() {
+    private val usuarioViewModel: UsuarioViewModel by viewModels()
+    private val eventosViewModel: EventosViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Prueba manual de la API
-        /*
-        lifecycleScope.launch {
-            try {
-                val eventosApi = RetrofitInstance.api
-                val eventosRecibidos = eventosApi.obtenerEventos()
-                Log.d("SALIDA", "Prueba de salida en MainActivity")
-                eventosRecibidos.forEach { evento ->
-                    Log.d("SALIDA", "Evento recibido: $evento")
-                }
-            } catch (e: Exception) {
-                Log.e("SALIDA", "Error al obtener eventos", e)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                usuarioViewModel.fcmToken = task.result
+                Log.d("FCM", "Token registrado: ${task.result}")
+            } else {
+                Log.e("FCM", "Error al obtener token", task.exception)
             }
-        }*/
-        /*para obtener datos del token de registro de un cliente */
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-            // Get new FCM registration token
-            val token = task.result
-            // Log and toast
-            val msg = "Token actual: $token"
-            Log.d("FCM", msg)
-            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-        })
 
-        setContent{
-            ListaEventosScreen()
+
         }
-
+        setContent {
+            val navController = rememberNavController()
+            AppNavigation(navController, usuarioViewModel, eventosViewModel)
+        }
     }
 }
