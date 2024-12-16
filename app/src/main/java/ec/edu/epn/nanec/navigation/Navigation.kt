@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import ec.edu.epn.nanec.uin.DetalleEventoScreen
 import ec.edu.epn.nanec.uin.ListaEventosScreen
 import ec.edu.epn.nanec.viewmodel.EventosViewModel
 import ec.edu.epn.nanec.uin.SeleccionTipoSuscripcionScreen
@@ -23,6 +24,10 @@ fun AppNavigation(
             SeleccionTipoSuscripcionScreen(usuarioViewModel) {
                 navController.navigate("lista_eventos")
             }
+        }
+        composable("detalle_evento/{eventoId}") { backStackEntry ->
+            val eventoId = backStackEntry.arguments?.getString("eventoId")
+            DetalleEventoScreen(eventoId, eventosViewModel)
         }
     }
 }

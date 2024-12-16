@@ -31,6 +31,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             AppNavigation(navController, usuarioViewModel, eventosViewModel)
+
+            val eventoId = intent.getStringExtra("eventoId")
+            eventoId?.let {
+                navController.navigate("detalle_evento/$it")
+            }
         }
     }
 }
