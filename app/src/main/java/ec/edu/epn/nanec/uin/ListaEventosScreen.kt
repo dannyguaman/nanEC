@@ -18,14 +18,28 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import ec.edu.epn.nanec.model.Evento
+import ec.edu.epn.nanec.viewmodel.AuthViewModel
 import ec.edu.epn.nanec.viewmodel.EventosViewModel
 
 @Composable
-fun ListaEventosScreen(eventosViewModel: EventosViewModel = viewModel(), navController: NavHostController) {
+fun ListaEventosScreen(eventosViewModel: EventosViewModel = viewModel(),
+                       navController: NavHostController,
+                       authViewModel: AuthViewModel
+                        ) {
     val eventos = eventosViewModel.eventos.collectAsState().value
 
     MaterialTheme {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            Button(
+                onClick = {
+                    authViewModel.cerrarSesion()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            ) {
+                Text("Cerrar sesión")
+            }
             LazyColumn(
                 modifier = Modifier.weight(1f)
             ) {
