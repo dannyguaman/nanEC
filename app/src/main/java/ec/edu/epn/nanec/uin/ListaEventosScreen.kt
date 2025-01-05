@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import ec.edu.epn.nanec.model.Evento
+import ec.edu.epn.nanec.uin.view.VistaPuntoInteres
 import ec.edu.epn.nanec.viewmodel.AuthViewModel
 import ec.edu.epn.nanec.viewmodel.EventosViewModel
 
@@ -44,7 +45,7 @@ fun ListaEventosScreen(eventosViewModel: EventosViewModel = viewModel(),
                 modifier = Modifier.weight(1f)
             ) {
                 items(eventos) { evento ->
-                    EventoItem(evento)
+                    VistaPuntoInteres(evento.nombre, evento.descripcion, evento.imagenUrl)
                     Log.d("EVENTO", evento.toString())
                 }
             }

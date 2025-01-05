@@ -78,6 +78,8 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     //implementation ("com.google.android.gms:play-services-auth:20.7.0")
     implementation (libs.play.services.auth)
+    //implementation "io.coil-kt:coil-compose:2.2.2"
+    implementation (libs.coil.kt.coil.compose)
 
 
     testImplementation(libs.junit)

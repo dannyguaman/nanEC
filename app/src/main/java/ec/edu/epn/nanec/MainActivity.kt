@@ -89,7 +89,7 @@ class MainActivity : ComponentActivity() {
             val data = result.data
             try {
                 val credential = clienteOneTap.getSignInCredentialFromIntent(data)
-                Log.e("GoogleOneTap", "Credenciales recibidas: ${credential.id + credential.displayName}")
+                Log.e("GoogleOneTap", "Credenciales recibidas: ${credential.id + credential.displayName + credential.profilePictureUri}")
                 val idToken = credential.googleIdToken
                 if (idToken != null) {
                     lifecycleScope.launch {

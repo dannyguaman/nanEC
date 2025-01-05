@@ -1,5 +1,6 @@
 package ec.edu.epn.nanec.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
@@ -49,7 +50,13 @@ class AuthViewModel : ViewModel() {
             viewModelScope.launch {
                 firebaseAuth.signInWithCredential(credential)
                     .addOnCompleteListener { res ->
-                        _usuarioAutenticado.value = res.isSuccessful
+                        if(res.isSuccessful){
+                            _usuarioAutenticado.value = true
+                            val usuario = firebaseAuth.currentUser
+                            Log.d("GoogleOneTap", "${usuario?.displayName}, ${usuario?.photoUrl}")
+
+                        }
+
                         if (!res.isSuccessful) {
                             _errorMessage.value = res.exception?.message ?: "Error interno desconocido- GOOGLE"
                         }
