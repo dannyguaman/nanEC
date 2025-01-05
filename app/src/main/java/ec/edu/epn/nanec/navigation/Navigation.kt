@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import ec.edu.epn.nanec.MainActivity
 import ec.edu.epn.nanec.uin.DetalleEventoScreen
 import ec.edu.epn.nanec.uin.ListaEventosScreen
 import ec.edu.epn.nanec.uin.LoginScreen
@@ -43,6 +44,7 @@ fun AppNavigation(
             LoginScreen(
                 onLoginSuccess = { correo, contrasena ->
                     authViewModel.iniciarSesion(correo, contrasena)},
+                onGoogleLogin = {(navController.context as? MainActivity)?.iniciarGoogleOneTap()},
                 errorMessage = errorMessage
             )
         }

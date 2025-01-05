@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">nanEC</string>
     <string name="title_activity_detalle">DetalleActivity</string>
+    <string name="web_client_id">30677479713-5k7nher12obg1523j0attms7n1ikvl9v.apps.googleusercontent.com</string>
 </resources>
