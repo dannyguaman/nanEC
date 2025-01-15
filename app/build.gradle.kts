@@ -80,6 +80,14 @@ dependencies {
     implementation (libs.play.services.auth)
     //implementation "io.coil-kt:coil-compose:2.2.2"
     implementation (libs.coil.kt.coil.compose)
+    /*
+
+
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+     */
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
 
 
     testImplementation(libs.junit)

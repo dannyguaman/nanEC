@@ -12,6 +12,7 @@ import ec.edu.epn.nanec.MainActivity
 import ec.edu.epn.nanec.uin.DetalleEventoScreen
 import ec.edu.epn.nanec.uin.ListaEventosScreen
 import ec.edu.epn.nanec.uin.LoginScreen
+import ec.edu.epn.nanec.uin.MapaEventosScreen
 import ec.edu.epn.nanec.viewmodel.EventosViewModel
 import ec.edu.epn.nanec.uin.SeleccionTipoSuscripcionScreen
 import ec.edu.epn.nanec.viewmodel.AuthViewModel
@@ -60,6 +61,9 @@ fun AppNavigation(
         composable("detalle_evento/{eventoId}") { backStackEntry ->
             val eventoId = backStackEntry.arguments?.getString("eventoId")
             DetalleEventoScreen(eventoId, eventosViewModel)
+        }
+        composable("mapa_eventos"){
+            MapaEventosScreen(eventosViewModel)
         }
     }
 }

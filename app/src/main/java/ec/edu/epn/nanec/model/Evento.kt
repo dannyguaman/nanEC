@@ -7,5 +7,7 @@ data class Evento(
     val descripcion: String,
     val tipo: String,
     val fecha: String,
-    val imagenUrl: String
+    val imagenUrl: String,
+    val latitud: Double,
+    val longitud: Double
 )

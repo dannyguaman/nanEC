@@ -55,6 +55,12 @@ fun ListaEventosScreen(eventosViewModel: EventosViewModel = viewModel(),
             ) {
                 Text("Ir a Suscripción")
             }
+            Button(
+                onClick = { navController.navigate("mapa_eventos") },
+                modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+            ) {
+                Text("Ver eventos en el mapa")
+            }
         }
     }
 
