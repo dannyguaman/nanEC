@@ -19,6 +19,9 @@ class UsuarioViewModel : ViewModel() {
     private val _mensajeSuscripcion = MutableStateFlow<String?>(null)
     val mensajeSuscripcion: StateFlow<String?> = _mensajeSuscripcion
 
+    private val _ubicacion = MutableStateFlow<Pair<Double, Double>?>(null)
+    val ubicacion: StateFlow<Pair<Double, Double>?> = _ubicacion
+
     fun suscribirUsuario(tipoSuscripcion: String) {
         if (tipoSuscripcion !in listOf("musical", "gastronomico", "sitio")) {
             Log.e("SUSCRIPCION", "Tipo de suscripción inválido: $tipoSuscripcion")
@@ -38,5 +41,9 @@ class UsuarioViewModel : ViewModel() {
     }
     fun limpiarMensajeSuscrpcionToast(){
         _mensajeSuscripcion.value = null
+    }
+
+    fun actualizarUbicacion(latitud: Double, longitud: Double) {
+        _ubicacion.value = Pair(latitud, longitud)
     }
 }

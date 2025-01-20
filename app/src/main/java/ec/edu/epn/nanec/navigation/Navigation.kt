@@ -63,7 +63,7 @@ fun AppNavigation(
             DetalleEventoScreen(eventoId, eventosViewModel)
         }
         composable("mapa_eventos"){
-            MapaEventosScreen(eventosViewModel)
+            MapaEventosScreen(eventosViewModel, usuarioViewModel)
         }
     }
 }

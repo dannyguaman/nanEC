@@ -15,25 +15,28 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import ec.edu.epn.nanec.model.Evento
 import ec.edu.epn.nanec.viewmodel.EventosViewModel
+import ec.edu.epn.nanec.viewmodel.UsuarioViewModel
 
 @Composable
-fun MapaEventosScreen(eventosViewModel: EventosViewModel) {
+fun MapaEventosScreen(eventosViewModel: EventosViewModel, usuarioViewModel: UsuarioViewModel) {
     val eventos = eventosViewModel.eventos.collectAsState().value
-    val ubicacionActual = remember { mutableStateOf<LatLng?>(null) }
+    //val ubicacionActual = remember { mutableStateOf<LatLng?>(null) }
+    val ubicacionPar = usuarioViewModel.ubicacion.collectAsState().value
+    val ubicacionActual = ubicacionPar?.let { LatLng(it.first, it.second) }
 
     val mapView = rememberMapViewWithLifecycle()
 
     AndroidView(factory = { mapView }) { mapView ->
         mapView.getMapAsync { googleMap ->
-            configurarMapa(googleMap, eventos, ubicacionActual.value)
+            configurarMapa(googleMap, eventos, ubicacionActual)
         }
     }
 
     // Obtener ubicación actual (simulación para este ejemplo, se puede conectar con FusedLocationProvider)
-    LaunchedEffect(Unit) {
+    /*LaunchedEffect(Unit) {
         // Ubicación ficticia
         ubicacionActual.value = LatLng(-0.180653, -78.467838) // Quito, Ecuador
-    }
+    } */
 }
 
 fun configurarMapa(googleMap: GoogleMap, eventos: List<Evento>, ubicacionActual: LatLng?) {

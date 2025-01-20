@@ -1,5 +1,6 @@
 package ec.edu.epn.nanec
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -8,18 +9,23 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.LaunchedEffect
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.messaging.FirebaseMessaging
 import ec.edu.epn.nanec.navigation.AppNavigation
 import ec.edu.epn.nanec.viewmodel.AuthViewModel
 import ec.edu.epn.nanec.viewmodel.EventosViewModel
 import ec.edu.epn.nanec.viewmodel.UsuarioViewModel
 import kotlinx.coroutines.launch
+import android.Manifest
+import android.annotation.SuppressLint
 
 
 class MainActivity : ComponentActivity() {
@@ -27,9 +33,16 @@ class MainActivity : ComponentActivity() {
     private val eventosViewModel: EventosViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
     private lateinit var clienteOneTap: SignInClient // Cliente de Google One Tap
+    private lateinit var clienteFusedLocation: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Inicializamos el proveedor FusedLocationProvider
+        clienteFusedLocation = LocationServices.getFusedLocationProviderClient(this)
+        //Solicitamos los permisos de ubicación
+        solicitarPermisosUbicacion()
+
+
         clienteOneTap = Identity.getSignInClient(this)
         setContent {
             val navController = rememberNavController()
@@ -105,4 +118,51 @@ class MainActivity : ComponentActivity() {
             Log.e("GoogleOneTap", "El usuario canceló el inicio de sesión")
         }
     }
+    private fun solicitarPermisosUbicacion() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissionsLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        } else {
+            obtenerUbicacionActual()
+        }
+    }
+
+    private val requestPermissionsLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+            ) {
+                obtenerUbicacionActual()
+            } else {
+                Log.e("Permisos", "Permisos de ubicación denegados")
+            }
+        }
+
+    @SuppressLint("MissingPermission")
+    private fun obtenerUbicacionActual() {
+        clienteFusedLocation.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                val latitud = location.latitude
+                val longitud = location.longitude
+                Log.d("Ubicacion", "Latitud: $latitud, Longitud: $longitud")
+                usuarioViewModel.actualizarUbicacion(latitud, longitud)
+            } else {
+                Log.e("Ubicacion", "No se pudo obtener la ubicación")
+            }
+        }
+    }
+
+
 }
