@@ -3,7 +3,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-    private const val BASE_URL = "http://172.31.40.52:8000"
+    private const val BASE_URL = "http://192.168.1.6:8000"
 
     val api: EventosApi by lazy {
         Retrofit.Builder()

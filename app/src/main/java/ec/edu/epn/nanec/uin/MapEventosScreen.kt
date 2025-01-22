@@ -46,18 +46,28 @@ fun configurarMapa(googleMap: GoogleMap, eventos: List<Evento>, ubicacionActual:
 
     // Centrar la cámara en la ubicación actual
     ubicacionActual?.let {
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 12f))
-    }
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 14f))
+        val circleOptions = com.google.android.gms.maps.model.CircleOptions()
+            .center(it) // Centro del círculo en la ubicación actual
+            .radius(80.0) // Radio en metros (1 km en este caso)
+            .strokeWidth(2f) // Ancho del borde
+            .strokeColor(0xFF0000FF.toInt()) // Color del borde (azul)
+            .fillColor(0x220000FF) // Color de relleno con transparencia (azul claro)
+        googleMap.addCircle(circleOptions) // Agregar el círculo al mapa
 
-    // Agregar marcadores para cada evento
-    eventos.forEach { evento ->
-        val posicion = LatLng(evento.latitud, evento.longitud) // Asegúrate de tener estos campos en el modelo Evento
-        googleMap.addMarker(
-            MarkerOptions()
-                .position(posicion)
-                .title(evento.nombre)
-                .snippet("Distancia: ${calcularDistancia(ubicacionActual, posicion)} km")
-        )
+        // Agregar marcadores para cada evento
+        eventos.forEach { evento ->
+            val posicion = LatLng(
+                evento.latitud,
+                evento.longitud
+            ) // Asegúrate de tener estos campos en el modelo Evento
+            googleMap.addMarker(
+                MarkerOptions()
+                    .position(posicion)
+                    .title(evento.nombre)
+                    .snippet("Distancia: ${calcularDistancia(ubicacionActual, posicion)} km")
+            )
+        }
     }
 }
 
