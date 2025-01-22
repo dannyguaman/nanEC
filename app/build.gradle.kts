@@ -89,6 +89,9 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
 
+    //implementation 'io.socket:socket.io-client:2.0.1'
+    implementation (libs.socket.io.client)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
